@@ -1,27 +1,119 @@
-:root{
-  --bg:#121212;
-  --surface:#181818;
-  --surface-raised:#202020;
-  --sidebar:#0b0b0b;
-  --primary:#1ed760;
-  --accent:#1ed760;
-  --text:#f5f5f5;
-  --muted:#a7a7a7;
-  --line:rgba(255,255,255,.08);
-  --on-primary:#06140b;
-  --glow:rgba(30,215,96,.16);
-  --shadow:0 18px 50px rgba(0,0,0,.3);
-  --player:rgba(24,24,24,.92);
-  --radius:12px;
-  color-scheme:dark;
-  transition:background-color .6s,color .6s;
+/*
+ * themes.css — Dynamic time-of-day palette + mood accent via CSS custom properties.
+ * data-time: morning | afternoon | evening | night  (auto-set each minute by setTheme())
+ * data-mood: happy | focus | chill | energetic       (user override, persisted)
+ * All transitions 600 ms to feel alive without being distracting.
+ */
+
+/* ── Default / fallback (night dark) ──────────────────────────────────────── */
+:root {
+  --bg:            #0B0F1E;
+  --surface:       #141A30;
+  --surface-raised:#1A2240;
+  --sidebar:       #090C18;
+  --primary:       #7C5CFF;
+  --accent:        #2DE2C5;
+  --text:          #EAF0FF;
+  --muted:         #8899BB;
+  --line:          rgba(255,255,255,.07);
+  --on-primary:    #ffffff;
+  --glow:          rgba(124,92,255,.22);
+  --shadow:        0 18px 50px rgba(0,0,0,.45);
+  --player:        rgba(11,15,30,.92);
+  --radius:        12px;
+  color-scheme: dark;
+  transition:
+    background-color .6s, color .6s,
+    --bg .6s, --surface .6s, --sidebar .6s,
+    --primary .6s, --accent .6s;
 }
-:root[data-time="morning"]{--bg:#121212;--surface:#181818;--surface-raised:#202020;--sidebar:#0b0b0b;color-scheme:dark}
-:root[data-time="afternoon"]{--bg:#111311;--surface:#181b19;--surface-raised:#202521;--sidebar:#0a0d0b;color-scheme:dark}
-:root[data-time="evening"]{--bg:#141113;--surface:#1b1719;--surface-raised:#252023;--sidebar:#0d0a0c;color-scheme:dark}
-:root[data-time="night"]{--bg:#090a09;--surface:#121312;--surface-raised:#1b1c1b;--sidebar:#050605;color-scheme:dark}
-:root[data-mood="happy"]{--mood:#1ed760;--mood-primary:#1ed760}
-:root[data-mood="focus"]{--mood:#65a8ff;--mood-primary:#65a8ff}
-:root[data-mood="chill"]{--mood:#a391ff;--mood-primary:#a391ff}
-:root[data-mood="energetic"]{--mood:#ff735f;--mood-primary:#ff735f}
-:root[data-mood]{--primary:var(--mood-primary);--accent:var(--mood);--glow:color-mix(in srgb,var(--mood) 18%,transparent)}
+
+/* ── Morning 05:00–11:59  LIGHT ───────────────────────────────────────────── */
+:root[data-time="morning"] {
+  --bg:            #FFF8EC;
+  --surface:       #FFFFFF;
+  --surface-raised:#FFF0D8;
+  --sidebar:       #FFEFD2;
+  --primary:       #FF8A3D;
+  --accent:        #FFC23D;
+  --text:          #2A1B0E;
+  --muted:         #7A5A38;
+  --line:          rgba(42,27,14,.1);
+  --on-primary:    #ffffff;
+  --glow:          rgba(255,138,61,.2);
+  --shadow:        0 12px 36px rgba(180,90,20,.18);
+  --player:        rgba(255,240,210,.92);
+  color-scheme: light;
+}
+
+/* ── Afternoon 12:00–16:59  LIGHT ─────────────────────────────────────────── */
+:root[data-time="afternoon"] {
+  --bg:            #F2FBFF;
+  --surface:       #FFFFFF;
+  --surface-raised:#DDF3FB;
+  --sidebar:       #DDF3FB;
+  --primary:       #0EA5C6;
+  --accent:        #FFB400;
+  --text:          #0E2530;
+  --muted:         #437080;
+  --line:          rgba(14,37,48,.1);
+  --on-primary:    #ffffff;
+  --glow:          rgba(14,165,198,.18);
+  --shadow:        0 12px 36px rgba(14,100,140,.16);
+  --player:        rgba(221,243,251,.92);
+  color-scheme: light;
+}
+
+/* ── Evening 17:00–20:59  DARK ────────────────────────────────────────────── */
+:root[data-time="evening"] {
+  --bg:            #1E1424;
+  --surface:       #2A1C33;
+  --surface-raised:#3A2645;
+  --sidebar:       #170F1C;
+  --primary:       #FF6B57;
+  --accent:        #F9A826;
+  --text:          #FFF1E8;
+  --muted:         #BBA090;
+  --line:          rgba(255,241,232,.07);
+  --on-primary:    #ffffff;
+  --glow:          rgba(255,107,87,.22);
+  --shadow:        0 18px 50px rgba(0,0,0,.4);
+  --player:        rgba(30,20,36,.93);
+  color-scheme: dark;
+}
+
+/* ── Night 21:00–04:59  DARK ──────────────────────────────────────────────── */
+:root[data-time="night"] {
+  --bg:            #0B0F1E;
+  --surface:       #141A30;
+  --surface-raised:#1A2240;
+  --sidebar:       #090C18;
+  --primary:       #7C5CFF;
+  --accent:        #2DE2C5;
+  --text:          #EAF0FF;
+  --muted:         #8899BB;
+  --line:          rgba(255,255,255,.07);
+  --on-primary:    #ffffff;
+  --glow:          rgba(124,92,255,.22);
+  --shadow:        0 18px 50px rgba(0,0,0,.45);
+  --player:        rgba(11,15,30,.92);
+  color-scheme: dark;
+}
+
+/* ── Mood accent overrides (accent + soft glow only, not bg/surface) ──────── */
+:root[data-mood="happy"]    { --primary:#FFB000; --accent:#FFB000; --glow:rgba(255,176,0,.2) }
+:root[data-mood="focus"]    { --primary:#3B82F6; --accent:#3B82F6; --glow:rgba(59,130,246,.2) }
+:root[data-mood="chill"]    { --primary:#9B8CFF; --accent:#9B8CFF; --glow:rgba(155,140,255,.2) }
+:root[data-mood="energetic"]{ --primary:#FF4D4D; --accent:#FF4D4D; --glow:rgba(255,77,77,.22) }
+
+/* on-primary re-derived per mood so text stays readable */
+:root[data-mood="happy"]    { --on-primary:#2A1800 }
+:root[data-mood="focus"]    { --on-primary:#ffffff }
+:root[data-mood="chill"]    { --on-primary:#ffffff }
+:root[data-mood="energetic"]{ --on-primary:#ffffff }
+
+/* Scrollbar follows surface */
+:root[data-time="morning"]  { scrollbar-color: #FFDCAA #FFF8EC }
+:root[data-time="afternoon"]{ scrollbar-color: #B0DCF0 #F2FBFF }
+:root[data-time="evening"]  { scrollbar-color: #4A3050 #1E1424 }
+:root[data-time="night"]    { scrollbar-color: #2A3060 #0B0F1E }
